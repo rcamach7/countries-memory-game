@@ -5,10 +5,6 @@ import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 
-interface Props {
-  setStartGame: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const images = [
   {
     url: "https://res.cloudinary.com/de2ymful4/image/upload/v1652308988/side-projects/americas_k2vqmd.png",
@@ -91,15 +87,11 @@ const ImageMarked = styled("span")(({ theme }) => ({
   transition: theme.transitions.create("opacity"),
 }));
 
-export const GameStart: React.FC<Props> = ({ setStartGame }) => {
-  const handleMapClick = async (area: string) => {
-    try {
-      setStartGame(false);
-    } catch (error) {
-      alert(error);
-    }
-  };
+interface Props {
+  handleStartGame: (area: string) => void;
+}
 
+export const GameStart: React.FC<Props> = ({ handleStartGame }) => {
   return (
     <React.Fragment>
       <Backdrop
@@ -153,7 +145,7 @@ export const GameStart: React.FC<Props> = ({ setStartGame }) => {
                       pt: 2,
                       pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                     }}
-                    onClick={() => handleMapClick(image.title)}
+                    onClick={() => handleStartGame(image.title)}
                   >
                     {image.title}
                     <ImageMarked className="MuiImageMarked-root" />

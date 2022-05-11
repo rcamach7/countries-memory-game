@@ -6,7 +6,7 @@
       font-size: 40px;
     }
     ul {
-      padding-bottom: 50px;
+      padding-bottom: clamp(20px, 5vw, 50px);
       text-align: center;
       list-style: none;
       li {

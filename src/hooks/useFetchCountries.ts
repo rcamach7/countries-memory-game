@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Country } from "../model";
 import axios from "axios";
 import { v4 } from "uuid";
@@ -6,11 +6,12 @@ import { v4 } from "uuid";
 export const useFetchCountries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchArea = async (area: string) => {
+    try {
       const { data } = await axios.get(
-        "https://restcountries.com/v3.1/region/europe"
+        `https://restcountries.com/v3.1/region/${area}`
       );
+
       const countries: Country[] = [];
       for (let i = 0; i < 25; i++) {
         countries.push({
@@ -21,11 +22,11 @@ export const useFetchCountries = () => {
           population: data[i].population,
         });
       }
-
       setCountries(countries);
-    };
-    fetchData();
-  }, []);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
-  return [countries] as const;
+  return [countries, fetchArea] as const;
 };

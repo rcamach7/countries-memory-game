@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
 
   // Game information
   const [highScore, score, setScore] = useScoreHistory();
-  const [countries] = useFetchCountries();
+  const [countries, fetchArea] = useFetchCountries();
 
   // Game state
   const [activeCountries, setActiveCountries] = useState<Country[]>([]);
@@ -32,6 +32,15 @@ export const Home: React.FC = () => {
       setScore(0);
       setStartGame(true);
       setClickedCountries([]);
+    }
+  };
+
+  const handleStartGame = async (area: string) => {
+    try {
+      await fetchArea(area);
+      setStartGame(false);
+    } catch (error) {
+      alert(error);
     }
   };
 
@@ -65,7 +74,7 @@ export const Home: React.FC = () => {
         handleCountryClick={handleCountryClick}
       />
 
-      {startGame ? <GameStart setStartGame={setStartGame} /> : null}
+      {startGame ? <GameStart handleStartGame={handleStartGame} /> : null}
     </div>
   );
 };
