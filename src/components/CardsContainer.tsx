@@ -4,16 +4,16 @@ import { Country } from "../model";
 
 interface Props {
   handleCountryClick: (id: string) => void;
-  countries: Country[];
+  activeCountries: Country[];
 }
 
 export const CardsContainer: React.FC<Props> = ({
   handleCountryClick,
-  countries,
+  activeCountries,
 }) => {
   return (
     <div className="CardsContainer">
-      {countries.map((country) => {
+      {activeCountries.map((country) => {
         return <CountryCard key={country.id} country={country} />;
       })}
     </div>

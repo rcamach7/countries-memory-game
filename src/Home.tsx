@@ -42,10 +42,13 @@ export const Home: React.FC = () => {
     return randomCountries;
   };
 
+  // Will only run once, since population of countries happens once when data is fetched.
   useEffect(() => {
-    setActiveCountries(randomCountries(8));
+    if (countries.length) {
+      setActiveCountries(randomCountries(8));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [countries]);
 
   return (
     <div className="Home">
@@ -65,7 +68,7 @@ export const Home: React.FC = () => {
         />
       </div>
       <CardsContainer
-        countries={countries}
+        activeCountries={activeCountries}
         handleCountryClick={handleCountryClick}
       />
     </div>

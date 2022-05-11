@@ -14,19 +14,15 @@ export const CountryCard: React.FC<Props> = ({ country }) => {
   const { name, flag, capital, population } = country;
 
   return (
-    <Card className="Card" sx={{ maxWidth: 200 }}>
+    <Card className="Card" sx={{ backgroundColor: "black" }}>
       <CardActionArea>
         <CardMedia component="img" height="100" image={flag} alt={name} />
-        <CardContent>
+        <CardContent sx={{ color: "white" }}>
           <Typography gutterBottom variant="h5" component="div">
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`Capital: ${capital}`}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`Population: ${population}`}
-          </Typography>
+          <Typography variant="body2">{`Capital: ${capital}`}</Typography>
+          <Typography variant="body2">{`Population: ${population}`}</Typography>
         </CardContent>
       </CardActionArea>
     </Card>

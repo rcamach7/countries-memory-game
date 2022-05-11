@@ -1,3 +1,6 @@
 .Card {
-  width: 200px;
+  width: clamp(150px, 45vw, 200px);
+  .textBox {
+    color: black;
+  }
 }
