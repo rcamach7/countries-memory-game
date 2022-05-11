@@ -14,7 +14,13 @@ export const CardsContainer: React.FC<Props> = ({
   return (
     <div className="CardsContainer">
       {activeCountries.map((country) => {
-        return <CountryCard key={country.id} country={country} />;
+        return (
+          <CountryCard
+            key={country.id}
+            country={country}
+            handleCountryClick={handleCountryClick}
+          />
+        );
       })}
     </div>
   );

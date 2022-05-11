@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import Chip from "@mui/material/Chip";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import SportsScoreIcon from "@mui/icons-material/SportsScore";
+import Backdrop from "@mui/material/Backdrop";
 import { CardsContainer } from "./components/CardsContainer";
 import { Country } from "./model";
 import { useScoreHistory } from "./hooks/useScoreHistory";
 import { useFetchCountries } from "./hooks/useFetchCountries";
 
 export const Home: React.FC = () => {
+  const [startGame, setStartGame] = React.useState<boolean>(true);
+
   const [highScore, score, setScore] = useScoreHistory();
   const [countries] = useFetchCountries();
-  // Game State
+
   const [activeCountries, setActiveCountries] = useState<Country[]>([]);
   const [clickedCountries, setClickedCountries] = useState<string[]>([]);
 
@@ -23,8 +26,8 @@ export const Home: React.FC = () => {
     } else {
       // Country has been clicked before - so user loses the game.
       setScore(0);
+      setStartGame(true);
       setClickedCountries([]);
-      alert("Oops! Game over!");
     }
   };
 
@@ -42,13 +45,12 @@ export const Home: React.FC = () => {
     return randomCountries;
   };
 
-  // Will only run once, since population of countries happens once when data is fetched.
   useEffect(() => {
     if (countries.length) {
       setActiveCountries(randomCountries(8));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countries]);
+  }, [countries, score]);
 
   return (
     <div className="Home">
@@ -67,10 +69,19 @@ export const Home: React.FC = () => {
           label={`Current Score: ${score}`}
         />
       </div>
+
       <CardsContainer
         activeCountries={activeCountries}
         handleCountryClick={handleCountryClick}
       />
+
+      {startGame ? (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+          onClick={() => setStartGame(!startGame)}
+        ></Backdrop>
+      ) : null}
     </div>
   );
 };
