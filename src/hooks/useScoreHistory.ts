@@ -1,26 +1,30 @@
 import { useState, useEffect } from "react";
 
 export const useScoreHistory = () => {
+  const [highScore, setHighScore] = useState<string | null>(
+    localStorage.getItem("highScore")
+  );
   const [score, setScore] = useState<number>(0);
 
   // Retrieve any stored high score.
   useEffect(() => {
-    const retrievedHighScore: string | null = localStorage.getItem("highScore");
-    if (retrievedHighScore) {
-      setScore(Number.parseInt(retrievedHighScore));
+    if (highScore) {
+      setScore(Number.parseInt(highScore));
+    } else {
+      localStorage.setItem("highScore", "0");
     }
-  }, []);
+  }, [highScore]);
 
   // Update stored highScore if current score is greater than that.
   useEffect(() => {
-    const retrievedHighScore: string | null = localStorage.getItem("highScore");
-    if (retrievedHighScore) {
-      if (Number.parseInt(retrievedHighScore) > score) {
+    if (highScore) {
+      if (score > Number.parseInt(highScore)) {
         // Update stored highScore
         localStorage.setItem("highScore", `${score}`);
+        setHighScore(`${score}`);
       }
     }
-  }, [score]);
+  }, [highScore, score]);
 
-  return [score, setScore];
+  return [highScore, score, setScore] as const;
 };
