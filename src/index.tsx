@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/index.scss";
 import ReactDOM from "react-dom/client";
 import { Home } from "./Home";
 
