@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import Chip from "@mui/material/Chip";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import SportsScoreIcon from "@mui/icons-material/SportsScore";
-import Backdrop from "@mui/material/Backdrop";
+import { randomCountries } from "./assets/helpers";
 import { CardsContainer } from "./components/CardsContainer";
 import { Country } from "./model";
 import { useScoreHistory } from "./hooks/useScoreHistory";
 import { useFetchCountries } from "./hooks/useFetchCountries";
+import { GameStart } from "./components/GameStart";
 
 export const Home: React.FC = () => {
+  // Initial / Restart game screen.
   const [startGame, setStartGame] = React.useState<boolean>(true);
 
+  // Game information
   const [highScore, score, setScore] = useScoreHistory();
   const [countries] = useFetchCountries();
 
+  // Game state
   const [activeCountries, setActiveCountries] = useState<Country[]>([]);
   const [clickedCountries, setClickedCountries] = useState<string[]>([]);
 
@@ -31,23 +35,9 @@ export const Home: React.FC = () => {
     }
   };
 
-  const randomCountries: (amount: number) => Country[] = (amount: number) => {
-    const randomCountries: Country[] = [];
-    // Will select "amount" of random countries from collection.
-    for (let i = 0; i < amount; i++) {
-      let randomIndex: number = Math.floor(Math.random() * countries.length);
-      // Make sure the random index isn't a country previously added
-      while (randomCountries.indexOf(countries[randomIndex]) > -1) {
-        randomIndex = Math.floor(Math.random() * countries.length);
-      }
-      randomCountries.push(countries[randomIndex]);
-    }
-    return randomCountries;
-  };
-
   useEffect(() => {
     if (countries.length) {
-      setActiveCountries(randomCountries(8));
+      setActiveCountries(randomCountries(8, countries));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countries, score]);
@@ -75,13 +65,7 @@ export const Home: React.FC = () => {
         handleCountryClick={handleCountryClick}
       />
 
-      {startGame ? (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={true}
-          onClick={() => setStartGame(!startGame)}
-        ></Backdrop>
-      ) : null}
+      {startGame ? <GameStart setStartGame={setStartGame} /> : null}
     </div>
   );
 };
