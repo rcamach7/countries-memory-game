@@ -92,6 +92,14 @@ const ImageMarked = styled("span")(({ theme }) => ({
 }));
 
 export const GameStart: React.FC<Props> = ({ setStartGame }) => {
+  const handleMapClick = async (area: string) => {
+    try {
+      setStartGame(false);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <React.Fragment>
       <Backdrop
@@ -100,10 +108,20 @@ export const GameStart: React.FC<Props> = ({ setStartGame }) => {
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
           backgroundColor: "rgba(0, 0, 0, .7)",
+          display: "flex",
+          flexDirection: "column",
         }}
         open={true}
-        onClick={() => setStartGame(false)}
+        // onClick={() => setStartGame(false)}
       >
+        <div className="gameRules">
+          <h1>Memory Game!</h1>
+          <ul>
+            <li>Select proffered map below</li>
+            <li>Click on any country</li>
+            <li>Don't click on that country again!</li>
+          </ul>
+        </div>
         <Box
           sx={{
             display: "flex",
@@ -135,6 +153,7 @@ export const GameStart: React.FC<Props> = ({ setStartGame }) => {
                       pt: 2,
                       pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                     }}
+                    onClick={() => handleMapClick(image.title)}
                   >
                     {image.title}
                     <ImageMarked className="MuiImageMarked-root" />
@@ -144,6 +163,7 @@ export const GameStart: React.FC<Props> = ({ setStartGame }) => {
             ))}
           </div>
         </Box>
+        <p>click on any map to get started...</p>
       </Backdrop>
     </React.Fragment>
   );
