@@ -1,8 +1,8 @@
-# Memory Game
+# Countries Memory Game
 
 The rules are simple: choose a map to populate countries from. Click on a country, and don't click on it again after they're shuffled! How far can you get?
 
-[Try it out now!](https://rcamach7.github.io/memory-game/)
+[Try it out now!](https://rcamach7.github.io/countries-memory-game/)
 
 ## Technologies Used
 
