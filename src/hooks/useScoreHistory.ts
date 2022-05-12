@@ -9,7 +9,7 @@ export const useScoreHistory = () => {
   // Retrieve any stored high score.
   useEffect(() => {
     if (highScore) {
-      setScore(Number.parseInt(highScore));
+      setHighScore(highScore);
     } else {
       localStorage.setItem("highScore", "0");
     }

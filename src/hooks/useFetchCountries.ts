@@ -13,14 +13,16 @@ export const useFetchCountries = () => {
       );
 
       const countries: Country[] = [];
-      for (let i = 0; i < 25; i++) {
-        countries.push({
-          id: v4(),
-          name: data[i].name.common,
-          flag: data[i].flags.png,
-          capital: data[i].capital[0],
-          population: data[i].population,
-        });
+      for (let i = 0; i < 35; i++) {
+        if (data[i] !== undefined) {
+          countries.push({
+            id: v4(),
+            name: data[i].name.common,
+            flag: data[i].flags.png,
+            capital: data[i].capital[0],
+            population: data[i].population,
+          });
+        }
       }
       setCountries(countries);
     } catch (error) {
