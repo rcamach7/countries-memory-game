@@ -8,6 +8,7 @@ import { Country } from "./model";
 import { useScoreHistory } from "./hooks/useScoreHistory";
 import { useFetchCountries } from "./hooks/useFetchCountries";
 import { GameStart } from "./components/GameStart";
+import header from "./header.png";
 
 export const Home: React.FC = () => {
   // Initial / Restart game screen.
@@ -54,20 +55,21 @@ export const Home: React.FC = () => {
   return (
     <div className="Home">
       <header>
-        <h1>Memory Game</h1>
+        {/* <h1>Memory Game</h1> */}
+        <img src={header} alt="" />
+        <div className="gameStatusBar">
+          <Chip
+            className="chip"
+            icon={<EmojiEventsIcon className="trophy" />}
+            label={`High Score: ${highScore}`}
+          />
+          <Chip
+            className="chip"
+            icon={<SportsScoreIcon className="flag" />}
+            label={`Current Score: ${score}`}
+          />
+        </div>
       </header>
-      <div className="gameStatusBar">
-        <Chip
-          className="chip"
-          icon={<EmojiEventsIcon className="trophy" />}
-          label={`High Score: ${highScore}`}
-        />
-        <Chip
-          className="chip"
-          icon={<SportsScoreIcon className="flag" />}
-          label={`Current Score: ${score}`}
-        />
-      </div>
 
       <CardsContainer
         activeCountries={activeCountries}
